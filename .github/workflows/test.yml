@@ -1,0 +1,5 @@
+name: FibBot Action Test
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]

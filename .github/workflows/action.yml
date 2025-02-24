@@ -1,5 +1,7 @@
 name: "FibBot"
 description: "A GitHub Action to calculate Fibonacci numbers from PR content"
+author: "nafisatou"
+
 inputs:
   enable_fibonacci:
     description: "Enable Fibonacci calculation"
@@ -9,6 +11,7 @@ inputs:
     description: "Max number for Fibonacci calculation"
     required: false
     default: "1000"
+
 runs:
   using: "docker"
   image: "Dockerfile"

@@ -1,6 +1,6 @@
 name: "FibBot"
 description: "A GitHub Action that scans PR content for numbers, calculates their Fibonacci numbers, and posts a comment."
-author: "Your Name"
+author: "nafisatou"
 
 # Permissions to read PR content and post comments
 permissions:

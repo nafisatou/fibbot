@@ -1,6 +1,6 @@
 name: Test FibBot Action
 
-on: 
+on:
   push:
     branches:
       - main
@@ -17,5 +17,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Run FibBot Action
-        uses: ./
+      - name: Set up Rust
+        uses: actions/setup-rust@v1
+        with:
+          rust-version: stable
+
+      - name: Build and run FibBot
+        run: |
+          cargo build --release
+          ./target/release/fibbot

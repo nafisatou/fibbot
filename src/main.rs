@@ -6,9 +6,11 @@ fn main() {
     let max_threshold = env::var("INPUT_MAX_THRESHOLD").unwrap_or("1000".to_string());
 
     println!("Enable Fibonacci Calculation: {}", enable_fib);
+    
     println!("Max Threshold: {}", max_threshold);
 
-    
+
+
 
     println!("Hello, world!");
 }

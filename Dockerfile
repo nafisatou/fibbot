@@ -15,3 +15,8 @@ RUN cargo build --release
 
 # Set the command to run the compiled binary
 CMD ["./target/release/fibbot"]
+
+
+
+
+#hello 

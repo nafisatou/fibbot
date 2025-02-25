@@ -6,7 +6,16 @@ author: "nafisatou"
 permissions:
   contents: read
   pull-requests: write
-  
+
+inputs:
+  enable_fib:
+    description: "Enable Fibonacci calculation (true/false)"
+    required: true
+    default: "true"
+  max_threshold:
+    description: "Maximum number allowed for Fibonacci calculation"
+    required: true
+    default: "100"
 
 runs:
   using: "composite"
@@ -23,3 +32,7 @@ runs:
       run: |
         cargo build --release
         ./target/release/fibbot
+      shell: bash
+      env:
+        INPUT_ENABLE_FIB: ${{ inputs.enable_fib }}
+        INPUT_MAX_THRESHOLD: ${{ inputs.max_threshold }}

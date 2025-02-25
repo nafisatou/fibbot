@@ -6,6 +6,7 @@ author: "nafisatou"
 permissions:
   contents: read
   pull-requests: write
+  
 
 runs:
   using: "composite"

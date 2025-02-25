@@ -1,25 +1,23 @@
-name: Test FibBot Action
+name: Test FibBot
 
-on:
+on:  
   push:
     branches:
       - main
-  pull_request:
 
 jobs:
-  test:
+  test-fibbot:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Set up Rust
-        uses: rust-lang/setup-rust@v1
+        uses: dtolnay/rust-toolchain@stable
         with:
-          rust-version: stable
+          toolchain: stable
 
-      - name: Build and run FibBot
+      - name: Build and Run FibBot
         run: |
           cargo build --release
           ./target/release/fibbot

@@ -1,47 +1,64 @@
+mod numerc;      // Extracts numbers from PR content
+mod fibonacci;   // Calculates Fibonacci numbers
+mod github;      // Interacts with the GitHub API
+
+use numerc::extract_numbers_from_pr;
+use fibonacci::{fibonacci, calculate_fibonacci_for_numbers};
+use github::post_comment_to_pr;
+
 use std::env;
 
-fn hello_world() {
-    println!("Hello, world! FibBot is running...");
-}
+#[tokio::main]  // This attribute makes the `main` function async
+async fn main() {
+    // **Day 1: Setup and Action Review**
+    println!("Hello, world! FibBot Action Initialized.");
 
-fn extract_numbers(text: &str) -> Vec<u32> {
-    text.split_whitespace()
-        .filter_map(|word| word.parse::<u32>().ok())
-        .filter(|&num| (5..=15).contains(&num)) // Limit to numbers between 5 and 15
-        .collect()
-}
+    // **Day 2: Minimal Action Implementation - Hello World**
+    // Confirm that the action is running by printing out basic info
+    println!("FibBot Action Setup Complete.");
 
-fn fibonacci(n: u32) -> u32 {  // Keep u32 for Fibonacci
-    (0..n).fold((0, 1), |(a, b), _| (b, a + b)).0
+    // **Day 3: Parameter Handling & Input Parsing**
+    // Get the inputs from the GitHub workflow (via environment variables)
+    let enable_fib = match env::var("ENABLE_FIB") {
+        Ok(val) => val == "true",  // Convert to boolean
+        Err(_) => false,  // Default to false if not set
+    };
 
-    
-}
+    let max_threshold: u32 = match env::var("MAX_THRESHOLD") {
+        Ok(val) => val.parse().unwrap_or(100),  // Default to 100 if parsing fails
+        Err(_) => 100,  // Default to 100 if not set
+    };
 
-fn main() {
-    //Day 1: Setup & Hello World 
-    hello_world();
-    let enable_fib = env::var("INPUT_ENABLE_FIB").unwrap_or("true".to_string()) == "true";
-    let max_threshold: u32 = env::var("INPUT_MAX_THRESHOLD").unwrap_or("100".to_string()).parse().unwrap_or(100);
-    println!("Enable Fibonacci: {}, Max Threshold: {}", enable_fib, max_threshold);
-    // End of Day 1 
+    println!("Enable Fibonacci Calculation: {}", enable_fib);
+    println!("Max Threshold: {}", max_threshold);
 
-    // Day 2: Extract Numbers & Implement Fibonacci 
-    let numbers = extract_numbers("PR fixes issues 5 and 10, improves 7 cases.");
-    println!("Extracted Numbers: {:?}", numbers);
-    //  End of Day 2
-
-    // Day 3: Validate Inputs & Apply Threshold 
-    if enable_fib {
-        for &num in &numbers {
-            if num <= max_threshold {
-                println!("Fib({}) = {}", num, fibonacci(num));
-            }
-        }
-    } else {
+    if !enable_fib {
         println!("Fibonacci calculation is disabled.");
+        return;
     }
-    //  End of Day 3 
 
+    // **Day 4: Core Logic - Extracting Numbers and Calculating Fibonacci**
+    // Example PR content for testing
+    let pr_content = "Here are some numbers: 3 5 8";  // Simulate PR content with numbers
+    let numbers = extract_numbers_from_pr(pr_content);
+    println!("Extracted numbers: {:?}", numbers);
 
+    // Calculate Fibonacci numbers for the extracted numbers
+    let fibonacci_results = calculate_fibonacci_for_numbers(&numbers, max_threshold);
+    println!("Fibonacci results: {:?}", fibonacci_results);
+
+    // **Day 5: GitHub API Interaction - Post Comment**
+    // Removed comment posting logic due to the error encountered
+
+    // **GitHub API credentials**
+    let token = match env::var("GITHUB_TOKEN") {
+        Ok(t) => t,
+        Err(_) => {
+            eprintln!("GitHub token is not set. Please export it as an environment variable.");
+            return;
+        }
+    };
+
+    // Proceed without posting the comment
+    println!("GitHub token: [successfully]");  // Do not print the token for security reasons
 }
-

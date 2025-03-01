@@ -20,13 +20,9 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
-
-    - name: Set up Rust
-      uses: rust-lang/setup-rust@v1
-      with:
-        rust-version: stable
+   - name: build Fibbot
+     run: cargo build --release
+     shell: bash
 
     - name: Build and run FibBot
       run: |

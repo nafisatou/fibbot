@@ -34,7 +34,6 @@ async fn main() {
 
     if !enable_fib {
         println!("Fibonacci calculation is disabled.");
-        return;
     }
 
     // Day 4: Core Logic - Extracting Numbers and Calculating Fibonacci

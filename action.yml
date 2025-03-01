@@ -1,0 +1,36 @@
+name: "FibBot"
+description: "A GitHub Action that scans PR content for numbers, calculates their Fibonacci numbers, and posts a comment."
+author: "nafisatou"
+
+# Permissions to read PR content and post comments
+permissions:
+  contents: read
+  pull-requests: write
+
+inputs:
+  enable_fib:
+    description: "Enable Fibonacci calculation (true/false)"
+    required: true
+    default: "true"
+  max_threshold:
+    description: "Maximum number allowed for Fibonacci calculation"
+    required: true
+    default: "100"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Set up Rust
+      uses: rust-lang/setup-rust@v1
+      with:
+        rust-version: stable
+
+    - name: Build and run FibBot
+      run: |
+        export PR_NUMBER="${{ inputs.pr_number }}"
+        export GITHUB_TOKEN="${{ inputs.github_token }}"
+        ./target/release/fibbot ${{ inputs.enable_fib }} ${{ inputs.max_threshold }}
+      shell: bash

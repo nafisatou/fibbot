@@ -25,7 +25,7 @@ runs:
      shell: bash
 
    - name: Build and run FibBot
-      run: |
+     run: |
         export PR_NUMBER="${{ inputs.pr_number }}"
         export GITHUB_TOKEN="${{ inputs.github_token }}"
         ./target/release/fibbot ${{ inputs.enable_fib }} ${{ inputs.max_threshold }}

@@ -2,10 +2,10 @@ name: "FibBot"
 description: "A GitHub Action that scans PR content for numbers, calculates their Fibonacci numbers, and posts a comment."
 author: "nafisatou"
 
-# Permissions to read PR content and post comments
-permissions:
-  contents: read
-  pull-requests: write
+# # Permissions to read PR content and post comments
+# permissions:
+#   contents: read
+#   pull-requests: write
 
 inputs:
   enable_fib:
@@ -20,7 +20,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-   - name: build Fibbot
+   - name: build fibbot
      run: cargo build --release
      shell: bash
 

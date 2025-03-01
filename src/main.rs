@@ -10,14 +10,14 @@ use std::env;
 
 #[tokio::main]  // This attribute makes the `main` function async
 async fn main() {
-    // **Day 1: Setup and Action Review**
+    // Day 1: Setup and Action Review
     println!("Hello, world! FibBot Action Initialized.");
 
-    // **Day 2: Minimal Action Implementation - Hello World**
+    // Day 2: Minimal Action Implementation - Hello World
     // Confirm that the action is running by printing out basic info
     println!("FibBot Action Setup Complete.");
 
-    // **Day 3: Parameter Handling & Input Parsing**
+    // Day 3: Parameter Handling & Input Parsing
     // Get the inputs from the GitHub workflow (via environment variables)
     let enable_fib = match env::var("ENABLE_FIB") {
         Ok(val) => val == "true",  // Convert to boolean
@@ -37,7 +37,7 @@ async fn main() {
         return;
     }
 
-    // **Day 4: Core Logic - Extracting Numbers and Calculating Fibonacci**
+    // Day 4: Core Logic - Extracting Numbers and Calculating Fibonacci
     // Example PR content for testing
     let pr_content = "Here are some numbers: 3 5 8";  // Simulate PR content with numbers
     let numbers = extract_numbers_from_pr(pr_content);
@@ -47,10 +47,10 @@ async fn main() {
     let fibonacci_results = calculate_fibonacci_for_numbers(&numbers, max_threshold);
     println!("Fibonacci results: {:?}", fibonacci_results);
 
-    // **Day 5: GitHub API Interaction - Post Comment**
+    // Day 5: GitHub API Interaction - Post Comment
     // Removed comment posting logic due to the error encountered
 
-    // **GitHub API credentials**
+    // GitHub API credentials
     let token = match env::var("GITHUB_TOKEN") {
         Ok(t) => t,
         Err(_) => {

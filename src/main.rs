@@ -1,10 +1,10 @@
-mod numerc;      // Extracts numbers from PR content
 mod fibonacci;   // Calculates Fibonacci numbers
 mod github;      // Interacts with the GitHub API
-
-use numerc::extract_numbers_from_pr;
-use fibonacci::{fibonacci, calculate_fibonacci_for_numbers};
-use github::post_comment_to_pr;
+mod extract_numbers;
+mod get_pull;
+use get_pull::get_pr;
+use fibonacci::fibonacci;
+use github::post_comment;
 
 use std::env;
 
@@ -39,26 +39,23 @@ async fn main() {
 
     // Day 4: Core Logic - Extracting Numbers and Calculating Fibonacci
     // Example PR content for testing
-    let pr_content = "Here are some numbers: 3 5 8";  // Simulate PR content with numbers
-    let numbers = extract_numbers_from_pr(pr_content);
-    println!("Extracted numbers: {:?}", numbers);
+    let pr_number: u64 = env::var("PR_NUMBER")
+        .expect("PR_NUMBER not set")
+        .parse::<u64>()
+        .expect("Invalid PR_NUMBER");  // Simulate PR content with numbers
+
+    let pr_numbers = get_pr(pr_number).await;
+   
+    println!("Extracted numbers: {:?}", pr_numbers);
 
     // Calculate Fibonacci numbers for the extracted numbers
-    let fibonacci_results = calculate_fibonacci_for_numbers(&numbers, max_threshold);
-    println!("Fibonacci results: {:?}", fibonacci_results);
-
-    // Day 5: GitHub API Interaction - Post Comment
-    // Removed comment posting logic due to the error encountered
-
-    // GitHub API credentials
-    let token = match env::var("GITHUB_TOKEN") {
-        Ok(t) => t,
-        Err(_) => {
-            eprintln!("GitHub token is not set. Please export it as an environment variable.");
-            return;
+    let mut response =
+        String::from("#### Fibonacci output of each number in the pull_request is:\n");
+    for &num in &pr_numbers {
+        let fib = fibonacci(num);
+        response.push_str(&format!("- Fibonacci({}) = {}\n", num, fib));
+    }
+        if let Err(e) = post_comment(&response).await {
+            eprintln!("Error posting comment: {}", e);
         }
-    };
-
-    // Proceed without posting the comment
-    println!("GitHub token: [successfully]");  // Do not print the token for security reasons
 }

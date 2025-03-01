@@ -24,7 +24,7 @@ runs:
      run: cargo build --release
      shell: bash
 
-    - name: Build and run FibBot
+   - name: Build and run FibBot
       run: |
         export PR_NUMBER="${{ inputs.pr_number }}"
         export GITHUB_TOKEN="${{ inputs.github_token }}"

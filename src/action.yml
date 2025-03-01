@@ -30,9 +30,7 @@ runs:
 
     - name: Build and run FibBot
       run: |
-        cargo build --release
-        ./target/release/fibbot
+        export PR_NUMBER="${{ inputs.pr_number }}"
+        export GITHUB_TOKEN="${{ inputs.github_token }}"
+        ./target/release/fibbot ${{ inputs.enable_fib }} ${{ inputs.max_threshold }}
       shell: bash
-      env:
-        INPUT_ENABLE_FIB: ${{ inputs.enable_fib }}
-        INPUT_MAX_THRESHOLD: ${{ inputs.max_threshold }}

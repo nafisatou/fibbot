@@ -31,6 +31,7 @@ runs:
     - name: Build and run FibBot
       run: |
         cargo build --release
+        export PR_NUMBER="${{ inputs.pr_number }}"
         ./target/release/fibbot
       shell: bash
       env:

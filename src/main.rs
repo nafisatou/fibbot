@@ -33,12 +33,12 @@ async fn main() {
     println!("Max Threshold: {}", max_threshold);
 
     if !enable_fib {
-        println!("Fibonacci calculation is disabled.");
+        println!("Fibonacci calculation is enable.");
     }
 
     // Day 4: Core Logic - Extracting Numbers and Calculating Fibonacci
     // Example PR content for testing
-    let pr_number: u64 = env::var("PR_NUMBER")
+    let pr_number: u64 = env::var("PR_NUMBER=")
         .expect("PR_NUMBER not set")
         .parse::<u64>()
         .expect("Invalid PR_NUMBER");  // Simulate PR content with numbers
@@ -49,7 +49,7 @@ async fn main() {
 
     // Calculate Fibonacci numbers for the extracted numbers
     let mut response =
-        String::from("#### Fibonacci output of each number in the pull_request is:\n");
+        String::from("# Fibonacci output of each number in the pull_request is:\n");
     for &num in &pr_numbers {
         let fib = fibonacci(num);
         response.push_str(&format!("- Fibonacci({}) = {}\n", num, fib));
